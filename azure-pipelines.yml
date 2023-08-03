@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'arm-conn'
+    subscriptionId: 'bc0f7c44-e547-42de-b1b6-692233e0ba8d'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'kamorobootcamprg'
+    location: 'Southeast Asia'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/hafidzali04/demo-IAC/main/azuredeploy.json'
+    overrideParameters: '-projectName hafidziykra'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
